@@ -1,423 +1,435 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ASIF GOOD BOY  — Profile</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MAGIC FRONT BY JELLY</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet" />
 <style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --pink: #ff2d78;
-    --cyan: #00f5ff;
-    --dark: #07060f;
-    --card: #110e22;
-    --gold: #ffd700;
+    --pink:      #ff2e88;
+    --pink-glow: #ff2e8888;
+    --pink-dim:  #ff2e8840;
+    --bg:        #050508;
+    --surface:   #0d0d14;
+    --border:    #ffffff12;
+    --text:      #e8e0f0;
+    --muted:     #6b6080;
   }
-
-  body {
-    min-height: 100vh;
-    background: var(--dark);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Outfit', sans-serif;
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Mono', monospace;
     overflow: hidden;
-    cursor: none;
   }
-
-  /* Custom cursor */
-  .cursor {
-    width: 14px; height: 14px;
-    background: var(--pink);
-    border-radius: 50%;
-    position: fixed;
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
     pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: transform 0.1s, background 0.3s;
-    mix-blend-mode: difference;
+    z-index: 0;
+    opacity: 0.4;
   }
-  .cursor-ring {
-    width: 40px; height: 40px;
-    border: 2px solid var(--cyan);
-    border-radius: 50%;
-    position: fixed;
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 45%, #ff2e8814 0%, transparent 70%);
     pointer-events: none;
-    z-index: 9998;
-    transform: translate(-50%, -50%);
-    transition: all 0.15s ease;
-    mix-blend-mode: difference;
-  }
-
-  /* Animated background */
-  .bg {
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(ellipse at 20% 50%, #1a003e 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 20%, #003344 0%, transparent 60%),
-                var(--dark);
     z-index: 0;
   }
-
-  .particles {
-    position: fixed;
-    inset: 0;
-    z-index: 1;
-    overflow: hidden;
-  }
-
-  .particle {
-    position: absolute;
-    width: 2px; height: 2px;
-    background: var(--cyan);
-    border-radius: 50%;
-    animation: floatUp linear infinite;
-    opacity: 0;
-  }
-
-  @keyframes floatUp {
-    0%   { transform: translateY(100vh) scale(0); opacity: 0; }
-    10%  { opacity: 1; }
-    90%  { opacity: 0.5; }
-    100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
-  }
-
-  /* Grid lines */
-  .grid {
-    position: fixed;
-    inset: 0;
-    z-index: 1;
-    background-image:
-      linear-gradient(rgba(0,245,255,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,245,255,0.04) 1px, transparent 1px);
-    background-size: 60px 60px;
-    animation: gridMove 20s linear infinite;
-  }
-  @keyframes gridMove {
-    0%   { background-position: 0 0; }
-    100% { background-position: 60px 60px; }
-  }
-
-  /* Card */
-  .card-wrapper {
-    position: relative;
-    z-index: 10;
-    animation: cardIn 1s cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
-  @keyframes cardIn {
-    from { opacity: 0; transform: translateY(60px) scale(0.9); }
-    to   { opacity: 1; transform: translateY(0) scale(1); }
-  }
-
-  .card {
-    width: 380px;
-    background: var(--card);
-    border: 1px solid rgba(255,45,120,0.3);
-    border-radius: 24px;
-    padding: 40px 36px;
-    position: relative;
-    overflow: hidden;
-    box-shadow:
-      0 0 60px rgba(255,45,120,0.15),
-      0 0 120px rgba(0,245,255,0.05),
-      inset 0 1px 0 rgba(255,255,255,0.06);
-  }
-
-  /* Glow corners */
-  .card::before {
-    content: '';
-    position: absolute;
-    top: -1px; left: -1px; right: -1px; bottom: -1px;
-    border-radius: 24px;
-    background: linear-gradient(135deg, var(--pink), transparent 40%, transparent 60%, var(--cyan));
-    z-index: -1;
-    opacity: 0.5;
-    animation: borderGlow 3s ease-in-out infinite alternate;
-  }
-  @keyframes borderGlow {
-    from { opacity: 0.3; }
-    to   { opacity: 0.7; }
-  }
-
-  /* Scan line */
-  .card::after {
-    content: '';
-    position: absolute;
-    top: -100%;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(transparent, rgba(0,245,255,0.05) 50%, transparent);
-    animation: scan 4s linear infinite;
-    pointer-events: none;
-  }
-  @keyframes scan {
-    from { top: -100%; }
-    to   { top: 200%; }
-  }
-
-  /* Avatar */
-  .avatar-section {
+  #app {
+    position: relative; z-index: 1;
+    width: 100%; height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 28px;
-    animation: fadeUp 0.8s 0.3s ease both;
-  }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .avatar-ring {
-    width: 100px; height: 100px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--pink), var(--cyan));
-    padding: 3px;
-    animation: spinRing 6s linear infinite;
-    margin-bottom: 16px;
-  }
-  @keyframes spinRing {
-    from { filter: hue-rotate(0deg); }
-    to   { filter: hue-rotate(360deg); }
-  }
-
-  .avatar-inner {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: var(--card);
-    display: flex;
-    align-items: center;
     justify-content: center;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 38px;
-    color: var(--pink);
-    letter-spacing: 2px;
-    text-shadow: 0 0 20px var(--pink);
+    padding: 16px 16px 8px;
   }
-
-  /* Badge */
-  .badge {
-    background: linear-gradient(90deg, var(--pink), #ff6b9d);
-    color: white;
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 2px;
-    padding: 4px 14px;
-    border-radius: 20px;
+  #top-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(9px, 1.2vw, 13px);
+    letter-spacing: 0.35em;
+    color: var(--muted);
     text-transform: uppercase;
-    box-shadow: 0 4px 20px rgba(255,45,120,0.4);
-    animation: pulseBadge 2s ease-in-out infinite;
+    margin-bottom: 12px;
+    opacity: 0;
+    animation: fadeSlideDown 1s ease 0.4s forwards;
   }
-  @keyframes pulseBadge {
-    0%, 100% { box-shadow: 0 4px 20px rgba(255,45,120,0.4); }
-    50%       { box-shadow: 0 4px 40px rgba(255,45,120,0.8); }
+  .monitor-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: min(820px, 92vw);
+    flex-shrink: 1;
+    opacity: 0;
+    animation: fadeSlideDown 1s ease 0.6s forwards;
   }
-
-  /* Name */
-  .name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 52px;
-    line-height: 1;
-    text-align: center;
-    letter-spacing: 4px;
-    background: linear-gradient(90deg, #fff 0%, var(--cyan) 50%, #fff 100%);
-    background-size: 200%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: shimmer 3s linear infinite, fadeUp 0.8s 0.5s ease both;
-    margin-bottom: 4px;
+  .monitor-frame {
+    width: 100%;
+    background: #08080f;
+    border: 2px solid #ffffff1a;
+    border-radius: 14px 14px 0 0;
+    padding: 10px 10px 0;
+    box-shadow:
+      0 0 0 1px #ff2e8820,
+      0 0 40px #ff2e8822,
+      0 30px 80px #00000088,
+      inset 0 1px 0 #ffffff18;
   }
-  @keyframes shimmer {
-    from { background-position: 0%; }
-    to   { background-position: 200%; }
-  }
-
-  /* Divider */
-  .divider {
-    width: 80px;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--pink), transparent);
-    margin: 16px auto;
-    animation: fadeUp 0.8s 0.6s ease both;
-  }
-
-  /* Info rows */
-  .info-row {
+  .monitor-bar {
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 12px 16px;
-    border-radius: 12px;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.06);
-    margin-bottom: 10px;
-    animation: fadeUp 0.8s ease both;
-    transition: background 0.3s, border-color 0.3s, transform 0.2s;
+    gap: 7px;
+    padding: 0 4px 8px;
   }
-  .info-row:hover {
-    background: rgba(255,45,120,0.08);
-    border-color: rgba(255,45,120,0.3);
-    transform: translateX(4px);
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot.r { background: #ff5f57; }
+  .dot.y { background: #febc2e; }
+  .dot.g { background: #28c840; }
+  .monitor-title {
+    flex: 1; text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; color: var(--muted);
+    letter-spacing: 0.2em; padding-right: 34px;
   }
-  .info-row:nth-child(1) { animation-delay: 0.7s; }
-  .info-row:nth-child(2) { animation-delay: 0.85s; }
-  .info-row:nth-child(3) { animation-delay: 1s; }
-
-  .icon {
-    font-size: 20px;
-    width: 36px; height: 36px;
-    background: rgba(255,45,120,0.15);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
+  .screen {
+    position: relative; width: 100%;
+    border-radius: 6px; overflow: hidden;
+    background: #020204;
+    box-shadow: inset 0 0 60px #00000080;
   }
-
-  .info-label {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: rgba(255,255,255,0.4);
-    margin-bottom: 2px;
-  }
-  .info-value {
-    font-size: 15px;
-    font-weight: 600;
-    color: #fff;
-  }
-
-  /* Madrasa special row */
-  .special-row {
-    margin-top: 20px;
-    padding: 16px;
-    border-radius: 14px;
-    background: linear-gradient(135deg, rgba(255,45,120,0.1), rgba(0,245,255,0.05));
-    border: 1px solid rgba(255,45,120,0.25);
-    text-align: center;
-    animation: fadeUp 0.8s 1.1s ease both;
-    position: relative;
-    overflow: hidden;
-  }
-  .special-row::before {
+  .screen::after {
     content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(255,45,120,0.08), transparent);
-    animation: sweep 3s ease-in-out infinite;
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, #00000014 2px, #00000014 4px);
+    pointer-events: none; z-index: 3; border-radius: 6px;
   }
-  @keyframes sweep {
-    from { transform: translateX(-100%); }
-    to   { transform: translateX(100%); }
+  #particleCanvas { display: block; width: 100%; border-radius: 6px; }
+  .monitor-neck { width: 60px; height: 20px; background: linear-gradient(180deg, #111118, #0a0a10); border-left: 1px solid #ffffff0a; border-right: 1px solid #ffffff0a; }
+  .monitor-base { width: min(200px, 40%); height: 8px; background: linear-gradient(180deg, #151520, #0c0c12); border-radius: 0 0 8px 8px; border: 1px solid #ffffff0a; border-top: none; box-shadow: 0 4px 20px #00000060; }
+  .input-section {
+    width: 100%; max-width: min(820px, 92vw);
+    margin-top: 22px;
+    opacity: 0;
+    animation: fadeSlideUp 1s ease 1s forwards;
   }
-  .special-label {
-    font-size: 10px;
-    letter-spacing: 2px;
+  .input-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 9px; letter-spacing: 0.4em;
+    color: var(--muted); text-transform: uppercase;
+    margin-bottom: 8px; display: block;
+  }
+  .input-glass {
+    position: relative; width: 100%;
+    background: linear-gradient(135deg, #ffffff0b, #ffffff05);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid #ffffff18; border-radius: 12px;
+    box-shadow: 0 0 0 1px #ff2e8818, 0 8px 32px #00000050, inset 0 1px 0 #ffffff12;
+    overflow: hidden;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .input-glass:focus-within {
+    border-color: #ff2e8855;
+    box-shadow: 0 0 0 1px #ff2e8840, 0 0 30px #ff2e8825, 0 8px 32px #00000050, inset 0 1px 0 #ffffff18;
+  }
+  #textInput {
+    width: 100%; background: transparent; border: none; outline: none;
+    padding: 14px 50px 14px 18px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(13px, 2vw, 17px); font-weight: 700;
+    letter-spacing: 0.08em; color: var(--pink);
+    caret-color: var(--pink);
+    text-shadow: 0 0 12px var(--pink-glow);
     text-transform: uppercase;
-    color: var(--cyan);
-    margin-bottom: 6px;
   }
-  .special-value {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px;
-    letter-spacing: 3px;
-    background: linear-gradient(90deg, var(--pink), var(--cyan));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  #textInput::placeholder {
+    color: var(--muted); text-shadow: none; font-weight: 400;
+    text-transform: none; font-family: 'Space Mono', monospace;
+    font-size: clamp(11px, 1.6vw, 13px); letter-spacing: 0.05em;
   }
-
-  /* Footer */
-  .footer {
-    margin-top: 24px;
-    text-align: center;
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.2);
-    animation: fadeUp 0.8s 1.2s ease both;
+  .btn-clear {
+    position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+    background: none; border: none; cursor: pointer;
+    color: var(--muted); font-size: 18px; line-height: 1;
+    transition: color 0.2s; display: none;
+  }
+  .btn-clear:hover { color: var(--pink); }
+  .btn-clear.visible { display: block; }
+  .hint { margin-top: 7px; font-size: 10px; color: var(--muted); letter-spacing: 0.12em; text-align: center; opacity: 0.7; }
+  footer {
+    position: fixed; bottom: 14px; right: 18px; z-index: 10;
+    display: flex; align-items: center; gap: 7px;
+    opacity: 0; animation: fadeIn 1.5s ease 1.8s forwards;
+  }
+  .credit-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--pink); box-shadow: 0 0 8px var(--pink);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  .credit-text { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; color: var(--muted); font-style: italic; }
+  .credit-text span { color: var(--pink); font-style: normal; text-shadow: 0 0 10px var(--pink-glow); }
+  @keyframes fadeSlideDown { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeSlideUp   { from { opacity: 0; transform: translateY(14px);  } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { to { opacity: 1; } }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.7); } }
+  @media (max-width: 600px) {
+    #app { padding: 10px 10px 6px; }
+    .monitor-neck { height: 12px; }
+    .monitor-base { height: 6px; }
+    .input-section { margin-top: 14px; }
   }
 </style>
 </head>
 <body>
-
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-<div class="bg"></div>
-<div class="grid"></div>
-<div class="particles" id="particles"></div>
-
-<div class="card-wrapper">
-  <div class="card">
-    <div class="avatar-section">
-      <div class="avatar-ring">
-        <div class="avatar-inner"ASIF</div>
+<div id="app">
+  <div id="top-label"></div>
+  <div class="monitor-wrap">
+    <div class="monitor-frame">
+      <div class="monitor-bar">
+        <div class="dot r"></div>
+        <div class="dot y"></div>
+        <div class="dot g"></div>
+        <div class="monitor-title"></div>
       </div>
-      <div class="badge">✦ love Card ✦</div>
-    </div>
-
-    <div class="name"ASIF LOVE YOU</div>
-    <div class="divider"></div>
-
-    <div class="info-row">
-      <div class="icon">👤</div>
-      <div>
-        <div class="info-label">Full Name</div>
-        <div class="info-value"ASIF </div>
+      <div class="screen">
+        <canvas id="particleCanvas"></canvas>
       </div>
     </div>
-
-    <div class="info-row">
-      <div class="icon">🎂</div>
-      <div>
-        <div class="info-label">Age</div>
-        <div class="info-value">15 Years Old</div>
-      </div>
+    <div class="monitor-neck"></div>
+    <div class="monitor-base"></div>
+  </div>
+  <div class="input-section">
+    <label class="input-label" for="textInput">Text Option</label>
+    <div class="input-glass">
+      <input id="textInput" type="text" placeholder="Text Your Nickname" maxlength="18" autocomplete="off" spellcheck="false" />
+      <button class="btn-clear" id="btnClear" title="মুইছা দে">✕</button>
     </div>
-
-    <div class="special-row">
-      <div class="special-label">⚡ Identity</div>
-      <div class="special-value">I Am Also GOOD🕌</div>
-    </div>
-
-    <div class="footer">✦ &nbsp; Made with jelly officer ❤️ &nbsp; ✦</div>
+    <div class="hint"></div>
   </div>
 </div>
-
+<footer>
+  <div class="credit-dot"></div>
+  <div class="credit-text"> <span></span> </div>
+</footer>
 <script>
-  // Custom cursor
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  document.addEventListener('mousemove', e => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-    setTimeout(() => {
-      ring.style.left = e.clientX + 'px';
-      ring.style.top = e.clientY + 'px';
-    }, 80);
+(function () {
+  'use strict';
+  const canvas   = document.getElementById('particleCanvas');
+  const ctx      = canvas.getContext('2d');
+  const input    = document.getElementById('textInput');
+  const btnClear = document.getElementById('btnClear');
+
+  const CFG = {
+    particleCount : 1800,
+    baseColor     : '#ff2e88',
+    minSize       : 1.2,
+    maxSize       : 2.8,
+    repelRadius   : 90,
+    repelStrength : 5,
+    canvasAspect  : 9 / 16,
+  };
+
+  let W = 0, H = 0;
+  let particles = [];
+  let targetPositions = [];
+  let currentText = '';
+  let mouseX = -9999, mouseY = -9999;
+  let needsUpdate = false;
+  let pendingText = '';
+
+  /* ── Resize ── */
+  function resizeCanvas() {
+    const screenDiv = canvas.parentElement;
+    W = screenDiv.clientWidth;
+    H = Math.round(W * CFG.canvasAspect);
+    canvas.width  = W;
+    canvas.height = H;
+    canvas.style.height = H + 'px';
+    targetPositions = currentText === ''
+      ? getHeartPositions(W, H)
+      : getTextPositions(currentText, W, H);
+    assignTargets();
+  }
+
+  /* ── Heart positions ── */
+  function getHeartPositions(w, h) {
+    const cx = w / 2, cy = h / 2;
+    const scale = Math.min(w, h) * 0.28;
+    const candidates = [];
+
+    for (let i = 0; i < CFG.particleCount * 6; i++) {
+      const t = (i / (CFG.particleCount * 6)) * Math.PI * 2;
+      const x = 16 * Math.pow(Math.sin(t), 3);
+      const y = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
+      candidates.push([cx + x * scale / 17, cy + y * scale / 17]);
+    }
+
+    let filled = 0;
+    const density = CFG.particleCount * 3;
+    let tries = 0;
+    while (filled < density && tries < density * 8) {
+      tries++;
+      const px = cx + (Math.random() - 0.5) * scale * 2;
+      const py = cy + (Math.random() - 0.5) * scale * 2;
+      if (isInsideHeart(px - cx, py - cy, scale)) { candidates.push([px, py]); filled++; }
+    }
+    return pickN(candidates, CFG.particleCount);
+  }
+
+  function isInsideHeart(x, y, scale) {
+    const nx = x / scale * 17, ny = -y / scale * 17;
+    const t = nx*nx + ny*ny - 1;
+    return t*t*t - nx*nx*ny*ny*ny <= 0;
+  }
+
+  /* ── Text positions ── */
+  function getTextPositions(text, w, h) {
+    const off = document.createElement('canvas');
+    off.width = w; off.height = h;
+    const oc = off.getContext('2d');
+    const fontSize = Math.max(Math.min(h * 0.45, w / (text.length * 0.65 + 0.5)), 20);
+    oc.fillStyle = '#fff';
+    oc.font = `900 ${fontSize}px 'Orbitron', sans-serif`;
+    oc.textAlign = 'center'; oc.textBaseline = 'middle';
+    oc.fillText(text.toUpperCase(), w / 2, h / 2);
+    const imgData = oc.getImageData(0, 0, w, h).data;
+    const lit = [];
+    for (let py = 0; py < h; py += 3)
+      for (let px = 0; px < w; px += 3)
+        if (imgData[(py * w + px) * 4 + 3] > 128) lit.push([px, py]);
+    return lit.length === 0 ? getHeartPositions(w, h) : pickN(lit, CFG.particleCount);
+  }
+
+  function pickN(arr, n) {
+    if (arr.length <= n) {
+      const out = arr.slice();
+      while (out.length < n) {
+        const s = arr[Math.floor(Math.random() * arr.length)];
+        out.push([s[0] + (Math.random()-.5)*3, s[1] + (Math.random()-.5)*3]);
+      }
+      return out;
+    }
+    const step = arr.length / n, out = [];
+    for (let i = 0; i < n; i++) out.push(arr[Math.floor(i * step)]);
+    return out;
+  }
+
+  /* ── Particle ── */
+  function Particle(x, y, tx, ty) {
+    this.x = x; this.y = y; this.tx = tx; this.ty = ty;
+    this.vx = 0; this.vy = 0;
+    this.size = CFG.minSize + Math.random() * (CFG.maxSize - CFG.minSize);
+    this.baseAlpha = 0.6 + Math.random() * 0.4;
+    this.alpha = this.baseAlpha;
+    this.phase = Math.random() * Math.PI * 2;
+    this.speed = 0.05 + Math.random() * 0.04;
+  }
+  Particle.prototype.update = function (t) {
+    const dx = this.x - mouseX, dy = this.y - mouseY;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    if (dist < CFG.repelRadius && dist > 0) {
+      const f = (CFG.repelRadius - dist) / CFG.repelRadius;
+      this.vx += (dx / dist) * f * CFG.repelStrength;
+      this.vy += (dy / dist) * f * CFG.repelStrength;
+    }
+    this.vx += (this.tx - this.x) * this.speed;
+    this.vy += (this.ty - this.y) * this.speed;
+    this.vx *= 0.88; this.vy *= 0.88;
+    this.x += this.vx; this.y += this.vy;
+    this.alpha = this.baseAlpha * (0.75 + 0.25 * Math.sin(t * 0.002 + this.phase));
+  };
+  Particle.prototype.draw = function () {
+    ctx.globalAlpha = this.alpha;
+    ctx.shadowBlur = 8; ctx.shadowColor = CFG.baseColor;
+    ctx.fillStyle = CFG.baseColor;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+  };
+
+  function initParticles() {
+    particles = [];
+    for (let i = 0; i < CFG.particleCount; i++) {
+      const [tx, ty] = targetPositions[i] || [W/2, H/2];
+      particles.push(new Particle(Math.random()*W, Math.random()*H, tx, ty));
+    }
+  }
+
+  function assignTargets() {
+    const shuffled = targetPositions.slice().sort(() => Math.random() - 0.5);
+    for (let i = 0; i < particles.length; i++) {
+      if (shuffled[i]) { particles[i].tx = shuffled[i][0]; particles[i].ty = shuffled[i][1]; }
+    }
+  }
+
+  /* ── Render loop ── */
+  function render(time) {
+    requestAnimationFrame(render);
+    ctx.globalAlpha = 1; ctx.shadowBlur = 0;
+    ctx.fillStyle = 'rgba(2,2,4,0.35)';
+    ctx.fillRect(0, 0, W, H);
+    for (let i = 0; i < particles.length; i++) {
+      particles[i].update(time);
+      particles[i].draw();
+    }
+    if (needsUpdate) {
+      needsUpdate = false;
+      currentText = pendingText;
+      targetPositions = currentText === ''
+        ? getHeartPositions(W, H)
+        : getTextPositions(currentText, W, H);
+      assignTargets();
+    }
+    ctx.globalAlpha = 1; ctx.shadowBlur = 0;
+  }
+
+  /* ── Input ── */
+  input.addEventListener('input', function () {
+    pendingText = this.value.trim();
+    needsUpdate = true;
+    btnClear.classList.toggle('visible', pendingText.length > 0);
+  });
+  btnClear.addEventListener('click', function () {
+    input.value = ''; pendingText = ''; needsUpdate = true;
+    btnClear.classList.remove('visible'); input.focus();
   });
 
-  // Particles
-  const container = document.getElementById('particles');
-  for (let i = 0; i < 40; i++) {
-    const p = document.createElement('div');
-    p.classList.add('particle');
-    p.style.left = Math.random() * 100 + 'vw';
-    p.style.width = p.style.height = (Math.random() * 3 + 1) + 'px';
-    p.style.animationDuration = (Math.random() * 10 + 6) + 's';
-    p.style.animationDelay = (Math.random() * 10) + 's';
-    const colors = ['#ff2d78','#00f5ff','#ffd700','#ffffff'];
-    p.style.background = colors[Math.floor(Math.random()*colors.length)];
-    container.appendChild(p);
+  /* ── Mouse/Touch ── */
+  canvas.addEventListener('mousemove', e => {
+    const r = canvas.getBoundingClientRect();
+    mouseX = (e.clientX - r.left) * (W / r.width);
+    mouseY = (e.clientY - r.top)  * (H / r.height);
+  });
+  canvas.addEventListener('mouseleave', () => { mouseX = -9999; mouseY = -9999; });
+  canvas.addEventListener('touchmove', e => {
+    e.preventDefault();
+    const r = canvas.getBoundingClientRect(), t = e.touches[0];
+    mouseX = (t.clientX - r.left) * (W / r.width);
+    mouseY = (t.clientY - r.top)  * (H / r.height);
+  }, { passive: false });
+  canvas.addEventListener('touchend', () => { mouseX = -9999; mouseY = -9999; });
+
+  /* ── Resize observer ── */
+  new ResizeObserver(resizeCanvas).observe(canvas.parentElement);
+
+  /* ── Boot ── */
+  function boot() {
+    resizeCanvas();
+    targetPositions = getHeartPositions(W, H);
+    initParticles();
+    render(0);
   }
+  document.fonts && document.fonts.ready ? document.fonts.ready.then(boot) : setTimeout(boot, 600);
+})();
 </script>
 </body>
 </html>
-
-
-
-
-
